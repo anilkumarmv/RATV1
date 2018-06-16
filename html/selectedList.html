@@ -1,0 +1,66 @@
+<p style="color:red">{{detail.name}}
+{{detail.selectedUnits}}
+{{detail.totalUnits}}
+{{detail.index}}</p>
+<div ng-click="showItemDetails(detail)" id="select-item-details">
+	<div id="btn-container">
+		<div class="remove-btn">
+			<button ng-click='enableView("info")' type="button" class="btn btn-primary">
+				<span class="glyphicon glyphicon-info-sign">&nbspInfo</span> 
+			</button>
+		</div>
+		<div class="remove-btn" style="clear:both">
+			<button ng-click='enableView("desc")'  type="button" class="btn btn-primary">
+				<span class="glyphicon glyphicon-remove">&nbspDesc</span> 
+			</button>
+		</div>
+		<div ng-if="showPicBtn" class="remove-btn" style="clear:both">
+			<button ng-click='enableView("images")'  type="button" class="btn btn-primary">
+				<span class="glyphicon glyphicon-picture">Images</span> 
+			</button>
+		</div>
+		<div class="remove-btn" style="clear:both">
+			<button ng-click="removeItemFromList(detail)" type="button" class="btn btn-primary">
+				<span class="glyphicon glyphicon-remove">Remove</span> 
+			</button>
+		
+		</div>
+		<div class="remove-btn" style="clear:both;color:white;">
+			Units:<input ng-click="updateTotalUnits()" ng-init="totalUnitsSelected=detail.selectedUnits" ng-model="totalUnitsSelected" type="number" min="1" max="6" value="0" />
+		</div>
+	</div>
+	<div ng-if="showSelectedItemDesc">
+		<p>Details of item {{detail.name}}</br>
+			desc:{{detail.desc}}
+		</p>
+	</div>
+	<div ng-if="showSelectedItemInfo">
+		<p>Details of item {{detail.name}}</br>
+			capacity:{{detail.capacity}}</br>
+			Total-price: {{detail.price * detail.selectedUnits}}</br> 
+			({{detail.price}}/unit * {{detail.selectedUnits}})</br>
+			Availability:{{detail.available}}</br>
+		</p>
+	</div>
+	<!-- ng-if="showSelectedItemImages" -->
+	<div ng-if="showSelectedItemImages" id="selectedItemsCarousel{{detail.index}}" class="carousel slide" style="max-width:60%">
+			<div class="carousel-inner" role="listbox">
+			  <div class="item active" ng-init="img1=(detail.imgUrl | split:' ':0)">
+				<img src="{{img1}}" alt="Image">   
+			  </div>
+			  <div class="item" ng-repeat="imgUrl in (detail.imgUrl | split:' ':'All') track by $index">
+				<img src="{{imgUrl}}" alt="Image">
+			  </div>
+			</div>
+
+			<!-- Left and right controls -->
+			<a class="left carousel-control" href="#selectedItemsCarousel{{detail.index}}" role="button" data-slide="prev">
+			  <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+			  <span class="sr-only">Previous</span>
+			</a>
+			<a class="right carousel-control" href="#selectedItemsCarousel{{detail.index}}" role="button" data-slide="next">
+			  <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+			  <span class="sr-only">Next</span>
+			</a>
+	</div><!-- myCarousel close-->
+</div>
